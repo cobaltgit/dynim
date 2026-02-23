@@ -1,0 +1,11 @@
+{
+  "accounts": [
+    {
+      "username": "janedoe",
+      "password": "41feae87474fb148c70d7ad4aace39bb14a4fa4e9b6283c5b2abb2295beb0eb3",
+      "hostnames": ["example.com"]
+    }
+  ],
+  "use_ipv6": true,
+  "delay": 60000
+}
