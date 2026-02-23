@@ -11,5 +11,4 @@ bin           = @["dynim"]
 # Dependencies
 
 requires "nim >= 2.0.8"
-requires "bearssl"
 requires "chronos"
