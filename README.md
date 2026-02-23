@@ -2,9 +2,20 @@
 
 A lightweight update client for [Dynu](https://www.dynu.com/) DDNS written in Nim using the [Dynu IP Update Protocol](https://www.dynu.com/en-US/DynamicDNS/IP-Update-Protocol)
 
-## Building
-
 Dynim comes in the form of a dependency-free executable weighing less than 1MB, even when statically linked with musl libc.
+
+## Comparison
+
+|              | [**Dynu IP Update Client**](https://www.dynu.com/Downloads/IP-Update-Client-For-Linux)\* | **Dynim**                                      |
+|--------------|------------------------------------------------------------------------------------------|------------------------------------------------|
+| Language     | C#                                                                                       | Nim                                            |
+| Dependencies | .NET Core 8.0                                                                            | :x: Fully static binary                        |
+| Size         | **34MB** for executable + libraries (excludes .NET Core runtime)                         | **652KB** binary                               |
+| Containers   | :x: No official container images                                                         | :white_check_mark: Minimal Dockerfile provided |
+
+*Linux client version 1.0.2
+
+## Building
 
 To build:
 ```sh
