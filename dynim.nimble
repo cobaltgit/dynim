@@ -18,10 +18,10 @@ import std/strformat
 const relCFlags = "-Os -flto -ffunction-sections -fdata-sections -fomit-frame-pointer -fno-unwind-tables -fno-asynchronous-unwind-tables"
 const relLFlags = "-flto -Wl,--gc-sections,--as-needed,--strip-all"
 const crossTargets = @[
-    ("amd64", "x86_64-linux-musl", "x86_64"),
-    ("arm64", "aarch64-linux-musl", "arm64"),
-    ("i386", "x86-linux-musl", "i686"),
-    ("arm", "arm-linux-musleabihf", "armhf"),
+    ("amd64", "x86_64-linux-musl", "linux-x86_64"),
+    ("arm64", "aarch64-linux-musl", "linux-arm64"),
+    ("i386", "x86-linux-musl", "linux-i686"),
+    ("arm", "arm-linux-musleabihf", "linux-armhf"),
     ("amd64", "x86_64-windows-gnu", "windows-x86_64"),
     ("i386", "x86-windows-gnu", "windows-i686"),
 ]
