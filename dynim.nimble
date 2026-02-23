@@ -1,6 +1,6 @@
 # Package
 
-version       = "1.0.0"
+version       = "1.0.1"
 author        = "cobaltgit"
 description   = "Lightweight Dynu DDNS update client"
 license       = "GPL-3.0-or-later"
@@ -22,13 +22,20 @@ const crossTargets = @[
     ("arm64", "aarch64-linux-musl", "arm64"),
     ("i386", "x86-linux-musl", "i686"),
     ("arm", "arm-linux-musleabihf", "armhf"),
+    ("amd64", "x86_64-windows-gnu", "windows-x86_64"),
+    ("i386", "x86-windows-gnu", "windows-i686"),
 ]
 
 proc zigBuild(cpu, triple, label: string) =
-    selfExec &"""c -d:release --opt:size --os:linux --cpu:{cpu} \
+    let isWindows = "windows" in triple
+    let outName = if isWindows: &"{binDir}/dynim-{label}.exe" else: &"{binDir}/dynim-{label}"
+    let passL = if isWindows: &"'-target {triple} {relLFlags}'"
+                else: &"'-target {triple} {relLFlags} -static'"
+    let os = if isWindows: "windows" else: "linux"
+    selfExec &"""c -d:release --opt:size --os:{os} --cpu:{cpu} \
         --cc:clang --clang.exe:zigcc --clang.linkerexe:zigcc \
-        --passC:'-target {triple} {relCFlags}' --passL:'-target {triple} {relLFlags} -static' \
-        -o:{binDir}/dynim-{label} src/dynim.nim"""
+        --passC:'-target {triple} {relCFlags}' --passL:{passL} \
+        -o:{outName} src/dynim.nim"""
 
 task static, "Build static binary linked to musl libc":
     selfExec &"""c -d:release --opt:size --os:linux \
