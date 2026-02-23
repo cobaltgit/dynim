@@ -1,2 +1,3 @@
-dynim
+bin/
 dynim.json
+dynim_linkerArgs.txt

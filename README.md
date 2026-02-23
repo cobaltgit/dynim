@@ -10,7 +10,7 @@ Dynim comes in the form of a dependency-free executable weighing less than 1MB, 
 |--------------|------------------------------------------------------------------------------------------|------------------------------------------------|
 | Language     | C#                                                                                       | Nim                                            |
 | Dependencies | .NET Core 8.0                                                                            | :x: Fully static binary                        |
-| Size         | **34MB** for executable + libraries (excludes .NET Core runtime)                         | **652KB** binary                               |
+| Size         | **34MB** for executable + libraries (excludes .NET Core runtime)                         | **<850KB** binary                              |
 | Containers   | :x: No official container images                                                         | :white_check_mark: Minimal Dockerfile provided |
 
 *Linux client version 1.0.2
@@ -19,10 +19,8 @@ Dynim comes in the form of a dependency-free executable weighing less than 1MB, 
 
 To build:
 ```sh
-$ nimble build           # dynamic binary
-$ nimble build -d:debug  # build with debug info
-$ nimble build -d:static # static binary linked with system libc
-$ nimble build -d:musl   # static binary linked with musl (recommended, requires musl-gcc)
+$ nimble static   # static binary linked with musl (requires musl-gcc wrapper)
+$ nimble cross    # cross-compiles for x86 and arm, 64 and 32-bit binaries (requires zigcc))
 ```
 
 ### Docker
@@ -30,7 +28,7 @@ $ nimble build -d:musl   # static binary linked with musl (recommended, requires
 A minimal, secure Dockerfile that builds an image containing only the `dynim` static binary and your configuration is provided:
 
 ```sh
-$ docker build . -t dynim
+$ nimble docker
 ```
 
 ## Configuration
