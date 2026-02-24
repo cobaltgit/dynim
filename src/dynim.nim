@@ -17,9 +17,13 @@ proc getIp(session: HttpSessionRef): Future[IPInfo] {.async: (raises: [Exception
   else:
     nil
 
-  let ipv4 = bytesToString((await ipv4Fut).data)
+  let ipv4 = try:
+    bytesToString((await ipv4Fut).data)
+  except HttpConnectionError as e:
+    logger.log(lvlError, "Unable to fetch IPv4 address: " & e.msg)
+    ""
 
-  let ipv6Str = if ipv6Fut != nil:
+  let ipv6 = if ipv6Fut != nil:
     try:
       bytesToString((await ipv6Fut).data)
     except HttpConnectionError as e:
@@ -29,8 +33,12 @@ proc getIp(session: HttpSessionRef): Future[IPInfo] {.async: (raises: [Exception
     logger.log(lvlDebug, "Not using IPv6")
     ""
 
-  logger.log(lvlInfo, "Got IPs: " & ipv4 & ", " & ipv6Str)
-  (ipv4, ipv6Str)
+  if (ipv4, ipv6) == ("", ""):
+    logger.log(lvlFatal, "Unable to fetch IP addresses!")
+    quit(1)
+  else:
+    logger.log(lvlInfo, "Got IPs: " & ipv4 & ", " & ipv6)
+    (ipv4, ipv6)
 
 proc main(): Future[void] {.async: (raises: [Exception]), gcsafe.} =
   logger = newConsoleLogger(fmtStr="[$time] - $levelname: ")
