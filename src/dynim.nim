@@ -18,8 +18,13 @@ proc getIp(session: HttpSessionRef): Future[IPInfo] {.async: (raises: [Exception
     nil
 
   let ipv4 = bytesToString((await ipv4Fut).data)
+
   let ipv6Str = if ipv6Fut != nil:
-    bytesToString((await ipv6Fut).data)
+    try:
+      bytesToString((await ipv6Fut).data)
+    except HttpConnectionError as e:
+      logger.log(lvlError, "Unable to fetch IPv6 address: " & e.msg)
+      ""
   else:
     logger.log(lvlDebug, "Not using IPv6")
     ""
