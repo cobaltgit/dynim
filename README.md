@@ -20,7 +20,7 @@ Dynim comes in the form of a dependency-free executable weighing less than 1MB, 
 To build:
 ```sh
 $ nimble static   # static binary linked with musl (requires musl-gcc wrapper)
-$ nimble cross    # cross-compiles for x86 and arm, 64 and 32-bit binaries (requires zigcc))
+$ nimble cross    # cross-compiles for x86 and arm, 64 and 32-bit binaries (requires zigcc)
 ```
 
 ### Docker
